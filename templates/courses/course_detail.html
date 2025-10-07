@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ course.title }} - Hortus Cognitor{% endblock %}
+
+{% block content %}
+<section class="hero" {% if course.hero_image %}style="background: linear-gradient(rgba(26, 26, 26, 0.7), rgba(42, 42, 42, 0.7)), url('{{ course.hero_image.url }}'); background-size: cover; background-position: center; background-attachment: fixed;"{% endif %}>
+    <div class="hero-logo">
+        <img src="{% static 'images/CARROTFIST_white.png' %}" alt="Hortus Cognitor Logo">
+    </div>
+    <div class="container">
+        <div class="hero-content">
+            <h1>{{ course.title }}</h1>
+            {% if course.subtitle %}
+            <p class="hero-subheading">{{ course.subtitle }}</p>
+            {% endif %}
+            <div style="margin-top: 2rem; color: white; text-align: center;">
+                <span style="margin-right: 2rem;">📅 Starts: {{ course.start_date|date:"F Y" }}</span>
+                <span style="margin-right: 2rem;">⏱ Duration: {{ course.duration }}</span>
+                <span>👥 Max Participants: {{ course.max_participants }}</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container course-detail">
+    <div class="course-info-grid">
+        <div class="course-content">
+            <h2>About This Course</h2>
+            <p style="line-height: 1.8;">{{ course.description }}</p>
+            
+            <h2>What You Will Experience</h2>
+            <p style="line-height: 1.8;">{{ course.what_you_will_experience }}</p>
+            
+            <h2>Course Structure</h2>
+            <p style="line-height: 1.8;">{{ course.course_structure }}</p>
+            
+            <h2>Location</h2>
+            <p style="line-height: 1.8;">{{ course.location }}</p>
+            
+            <h2>Accessibility</h2>
+            <p style="line-height: 1.8;">{{ course.accessibility }}</p>
+            
+            <h2>Who This Is For</h2>
+            <p style="line-height: 1.8;">{{ course.who_this_is_for }}</p>
+            
+            <h2>What You Will Gain</h2>
+            <p style="line-height: 1.8;">{{ course.what_you_will_gain }}</p>
+        </div>
+        
+        <div class="course-sidebar">
+            <div style="background: white; padding: 2rem; border-radius: 8px; margin-bottom: 2rem;">
+                <h3 style="font-family: 'hey-eloise', 'Kalam', 'Patrick Hand', 'Caveat', cursive; color: #ADA228; font-size: 1.8rem; margin-bottom: 1rem;">Course Investment</h3>
+                <p style="font-size: 2rem; color: #ADA228; font-weight: 500; font-family: 'Georgia', serif; margin-bottom: 1rem;">£{{ course.price }}</p>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 2rem;">Limited to {{ course.max_participants }} participants</p>
+            </div>
+            
+            <div class="booking-form">
+                <h3 style="font-family: 'hey-eloise', 'Kalam', 'Patrick Hand', 'Caveat', cursive; color: #ADA228; font-size: 1.8rem; margin-bottom: 1.5rem;">Book Your Place</h3>
+                
+                {% if messages %}
+                    {% for message in messages %}
+                    <div style="background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+                
+                <form method="post" action="{% url 'book_course' course.slug %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="{{ booking_form.full_name.id_for_label }}">Full Name *</label>
+                        {{ booking_form.full_name }}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ booking_form.email.id_for_label }}">Email *</label>
+                        {{ booking_form.email }}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ booking_form.phone.id_for_label }}">Phone</label>
+                        {{ booking_form.phone }}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ booking_form.message.id_for_label }}">Message</label>
+                        {{ booking_form.message }}
+                    </div>
+                    
+                    <button type="submit" class="btn" style="width: 100%;">Book Now</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if course.instructors.exists %}
+<section class="instructor-section">
+    <div class="container">
+        <h2 style="font-family: 'hey-eloise', 'Kalam', 'Patrick Hand', 'Caveat', cursive; color: #ADA228; font-size: 2.5rem; text-align: center; margin-bottom: 3rem;">Meet Your Instructor</h2>
+        
+        {% for instructor in course.instructors.all %}
+        <div class="instructor-card">
+            {% if instructor.photo %}
+            <img src="{{ instructor.photo.url }}" alt="{{ instructor.name }}" class="instructor-photo">
+            {% else %}
+            <div style="width: 200px; height: 200px; background: #ADA228; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+                {{ instructor.name|first }}
+            </div>
+            {% endif %}
+            <div class="instructor-info">
+                <h3>{{ instructor.name }}</h3>
+                <p style="line-height: 1.8;">{{ instructor.bio }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+{% endblock %}

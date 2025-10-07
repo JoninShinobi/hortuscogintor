@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Our Courses - Hortus Cognitor{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-logo">
+        <img src="{% static 'images/CARROTFIST_white.png' %}" alt="Hortus Cognitor Logo">
+    </div>
+    <div class="container">
+        <div class="hero-content">
+            <h1>Our Courses</h1>
+            <p class="hero-subheading">Transform your relationship with the land through hands-on learning</p>
+        </div>
+    </div>
+</section>
+
+<section class="container">
+    <div class="course-grid">
+        {% for course in courses %}
+        <div class="course-card">
+            <div class="course-card-header">
+                <h3>{{ course.title }}</h3>
+                {% if course.subtitle %}
+                <p style="font-size: 1rem; opacity: 0.9;">{{ course.subtitle }}</p>
+                {% endif %}
+            </div>
+            <div class="course-card-body">
+                <div class="course-meta">
+                    <span>📅 {{ course.start_date|date:"F Y" }}</span>
+                    <span>⏱ {{ course.duration }}</span>
+                </div>
+                <div class="course-meta" style="margin-bottom: 1.5rem;">
+                    <span>👥 Max {{ course.max_participants }} participants</span>
+                    <span>💷 £{{ course.price }}</span>
+                </div>
+                <div class="course-description">
+                    <p>{{ course.description|truncatewords:40 }}</p>
+                </div>
+                <a href="{% url 'course_detail' course.slug %}" class="btn">Learn More</a>
+            </div>
+        </div>
+        {% empty %}
+        <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+            <h3 style="color: #ADA228;">No courses available at the moment</h3>
+            <p>Please check back soon for upcoming courses.</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
