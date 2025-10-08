@@ -27,8 +27,7 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 
-# Static files
-/static/
+# Static files (keep source static files, ignore collected staticfiles)
 /staticfiles/
 
 # Media files

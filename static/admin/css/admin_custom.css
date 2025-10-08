@@ -1,0 +1,92 @@
+/* Clean, minimal admin improvements */
+
+/* Better spacing for form rows */
+.form-row {
+    margin-bottom: 20px;
+    clear: both;
+}
+
+/* Make textareas larger and more usable */
+textarea {
+    min-height: 120px !important;
+    width: 100% !important;
+}
+
+/* Better fieldset spacing */
+fieldset {
+    margin-bottom: 25px;
+    padding: 20px;
+}
+
+fieldset h2 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Improve form field widths */
+input[type="text"], input[type="email"], input[type="url"], 
+input[type="number"], select {
+    min-width: 300px;
+}
+
+/* Better help text positioning */
+.help {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #666;
+    line-height: 1.4;
+}
+
+/* Image upload areas */
+.field-hero_image, .field-photo {
+    margin: 20px 0;
+}
+
+.field-hero_image .help {
+    background: #f0f8ff;
+    padding: 10px;
+    border-left: 4px solid #007cba;
+    margin-top: 10px;
+}
+
+/* Better button positioning */
+.submit-row {
+    margin-top: 30px;
+    padding: 20px 0;
+    border-top: 1px solid #eee;
+}
+
+/* Organize the course form better */
+.field-title, .field-subtitle {
+    width: 100%;
+}
+
+.field-title input, .field-subtitle input {
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Make collapsed fieldsets cleaner */
+fieldset.collapsed {
+    border: 1px solid #ddd;
+}
+
+fieldset.collapsed h2 {
+    cursor: pointer;
+    background: #f9f9f9;
+    padding: 10px;
+    margin: -20px -20px 15px -20px;
+}
+
+/* Clean up the course list display */
+#changelist .results {
+    margin-top: 20px;
+}
+
+/* Better instructor photo preview */
+.field-photo img {
+    max-width: 150px;
+    height: auto;
+    border-radius: 50%;
+    margin-top: 10px;
+}

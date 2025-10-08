@@ -1,0 +1,112 @@
+/* Custom Unfold styles for Hortus Cognitor - PROPER DARK THEME APPROACH */
+
+/* Import Hey Eloise font */
+@import url('https://use.typekit.net/lee7tab.css');
+
+/* Use Hey Eloise for special headings */
+.text-lg.font-medium, .text-xl.font-semibold, .text-2xl.font-bold {
+    font-family: 'hey-eloise', sans-serif !important;
+}
+
+/* Custom styling for the logo area */
+.sidebar-brand {
+    background: linear-gradient(135deg, #ADA228 0%, #969020 100%);
+}
+
+/* Style the hero image help text */
+.field-hero_image .help-text {
+    background: #f0f8ff;
+    border-left: 4px solid #ADA228;
+    padding: 12px;
+    border-radius: 4px;
+    margin-top: 8px;
+}
+
+/* Make image previews circular for instructor photos */
+.field-photo img {
+    border-radius: 50%;
+    border: 3px solid #ADA228;
+}
+
+/* Custom button styling */
+.btn-primary {
+    background: linear-gradient(135deg, #ADA228 0%, #969020 100%);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #969020 0%, #7a7a1b 100%);
+}
+
+/* DARK THEME SPECIFIC TEXT FIXES - Using Unfold's class-based approach */
+html.dark #content label,
+html.dark #content .form-row label,
+html.dark #content td,
+html.dark #content th,
+html.dark #content a,
+html.dark #content p,
+html.dark #content span,
+html.dark .results td,
+html.dark .results th,
+html.dark .results a {
+    color: rgb(229 231 235) !important; /* Light gray for dark backgrounds */
+}
+
+/* Dark theme help text */
+html.dark #content .help,
+html.dark #content .helptext,
+html.dark #content .text-xs,
+html.dark .leading-relaxed.mt-2.text-xs {
+    color: rgb(156 163 175) !important; /* Medium gray for help text */
+}
+
+/* Additional dark theme fixes for table content */
+html.dark .changelist-inner td,
+html.dark .changelist-inner th,
+html.dark .module caption,
+html.dark .module h2,
+html.dark .changeform-navigation a {
+    color: rgb(229 231 235) !important;
+}
+
+/* Fix for form labels and field text in dark theme */
+html.dark .form-label,
+html.dark .form-control,
+html.dark .field-box label,
+html.dark .inline-group label {
+    color: rgb(229 231 235) !important;
+}
+
+/* LIGHT THEME FIXES - for white on white text issue */
+html:not(.dark) #content label,
+html:not(.dark) #content .form-row label,
+html:not(.dark) #content td,
+html:not(.dark) #content th,
+html:not(.dark) #content a,
+html:not(.dark) #content p,
+html:not(.dark) #content span,
+html:not(.dark) .results td,
+html:not(.dark) .results th,
+html:not(.dark) .results a,
+html:not(.dark) table td,
+html:not(.dark) table th,
+html:not(.dark) .changelist-inner td,
+html:not(.dark) .changelist-inner th {
+    color: rgb(17 24 39) !important; /* Dark gray for light backgrounds */
+}
+
+/* Light theme help text */
+html:not(.dark) #content .help,
+html:not(.dark) #content .helptext,
+html:not(.dark) #content .text-xs,
+html:not(.dark) .leading-relaxed.mt-2.text-xs {
+    color: rgb(107 114 128) !important; /* Medium gray for help text */
+}
+
+/* NUCLEAR OPTION - Force all text to be visible regardless of theme */
+label,
+td, th,
+.results td, .results th,
+table td, table th {
+    color: rgb(17 24 39) !important; /* Dark text on light backgrounds */
+}
