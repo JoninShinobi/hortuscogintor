@@ -3,9 +3,14 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from courses.views import home, regenerative_movement_course
+from django.http import HttpResponse
+
+def health_check(request):
+    return HttpResponse("Django is working! ✅")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('health/', health_check, name='health_check'),
     path('', home, name='home'),
     path('regenerative-movement-course/', regenerative_movement_course, name='regenerative_movement_course'),
     path('courses/', include('courses.urls')),
