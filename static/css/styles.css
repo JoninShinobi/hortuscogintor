@@ -412,11 +412,12 @@ footer {
     
     /* Logo positioning fix for mobile */
     .hero-logo {
-        position: relative;
-        bottom: auto;
+        position: absolute;
+        bottom: 1rem;
+        left: 1rem;
         right: auto;
-        text-align: center;
-        margin: 2rem 0;
+        text-align: left;
+        margin: 0;
     }
     
     .hero-logo img {
