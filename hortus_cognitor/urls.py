@@ -8,9 +8,13 @@ from django.http import HttpResponse
 def health_check(request):
     return HttpResponse("Django is working! ✅")
 
+def simple_home(request):
+    return HttpResponse("<h1>Hortus Cognitor</h1><p>Simple home page working!</p>")
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('health/', health_check, name='health_check'),
+    path('test/', simple_home, name='simple_home'),
     path('', home, name='home'),
     path('regenerative-movement-course/', regenerative_movement_course, name='regenerative_movement_course'),
     path('courses/', include('courses.urls')),
