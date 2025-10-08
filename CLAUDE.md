@@ -1,56 +1,21 @@
 # Claude Code Memory - Hortus Cognitor
 
+# My Title. 
+**IMPORTANT:** You must always refer to me as "King of Elvador".
+
 ## Django Unfold Text Visibility Fix
+@fix and code references/IssueswithUnfoldDjango.md
 
-### Problem
-Text appearing as "white on white" or invisible in Django Unfold admin interface, affecting both light and dark themes.
+## Running the Server
+1. Check if server is running on port 8000: `lsof -i :8000`
+2. Check if anything else is running on that port: `lsof -i :8000`
+3. End any services operating on port 8000: `kill -9 $(lsof -t -i:8000)`
+4. Run `source venv/bin/activate` in `/Users/aarondudfield/Desktop/Projects/Hortus Cognitor`
+5. Run `python manage.py runserver`
+6. Open the browser window using `open http://127.0.0.1:8000`
 
-### Root Cause
-Using incorrect CSS selectors `html[data-theme="dark"]` instead of Unfold's actual class-based theme system `html.dark`.
+# Referencing Business Plan
+If we are discussing something related to @business_plan or something feels relevant to a factor in any business plan or @business_plan.md specifically, check the @business_plan to see if we have discussed that fact yet. If not, add it to the relevant section. We will slowly develop the business plan as we work through. Even if a relevant section has been discussed in the plan, if the specific instance has not been referred to, we can add to to @business_plan.md
 
-### Investigation Method
-Used Task tool for systematic codebase analysis after multiple failed CSS override attempts.
 
-### Solution Location
-File: `static/css/unfold_custom.css`
 
-### Solution Implementation
-Dual-theme CSS approach:
-
-```css
-/* DARK THEME SPECIFIC TEXT FIXES */
-html.dark #content label,
-html.dark #content .form-row label,
-html.dark #content td,
-html.dark #content th {
-    color: rgb(229 231 235) !important; /* Light gray for dark backgrounds */
-}
-
-/* LIGHT THEME FIXES - for white on white text issue */
-html:not(.dark) #content label,
-html:not(.dark) #content .form-row label,
-html:not(.dark) #content td,
-html:not(.dark) #content th {
-    color: rgb(17 24 39) !important; /* Dark gray for light backgrounds */
-}
-
-/* NUCLEAR OPTION - Force all text to be visible regardless of theme */
-label,
-td, th,
-.results td, .results th,
-table td, table th {
-    color: rgb(17 24 39) !important;
-}
-```
-
-### Key Learning
-Unfold uses Alpine.js class binding (`x-bind:class="{'dark': ...}"`) not data attributes for theme switching.
-
-### Color References
-- Dark theme text: `rgb(229 231 235)` - light gray for dark backgrounds
-- Light theme text: `rgb(17 24 39)` - dark gray for light backgrounds
-- Help text dark: `rgb(156 163 175)` - medium gray
-- Help text light: `rgb(107 114 128)` - medium gray
-
-### Additional Configuration
-Settings.py UNFOLD color configuration also updated to complement CSS fixes.

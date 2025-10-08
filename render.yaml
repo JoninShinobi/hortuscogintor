@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: hortus-cognitor
+    env: python
+    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate"
+    startCommand: "gunicorn hortus_cognitor.wsgi:application"
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: hortus_cognitor.settings
+      - key: PYTHON_VERSION
+        value: 3.11.7
+      - key: DEBUG
+        value: False
+
+databases:
+  - name: hortus-cognitor-db
+    databaseName: hortus_cognitor
+    user: hortus_cognitor

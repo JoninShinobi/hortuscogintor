@@ -10,11 +10,16 @@ from .models import Course, Instructor, Booking
 from .forms import BookingForm
 
 def home(request):
-    featured_courses = Course.objects.filter(is_active=True)[:3]
-    context = {
-        'featured_courses': featured_courses
-    }
-    return render(request, 'home.html', context)
+    try:
+        featured_courses = Course.objects.filter(is_active=True)[:3]
+        context = {
+            'featured_courses': featured_courses
+        }
+        return render(request, 'home.html', context)
+    except Exception as e:
+        # Fallback for database issues
+        from django.http import HttpResponse
+        return HttpResponse(f"<h1>Hortus Cognitor - Django is working!</h1><p>Database issue: {str(e)}</p>")
 
 def regenerative_movement_course(request):
     return render(request, 'regenerative_movement_course.html')

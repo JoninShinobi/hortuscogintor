@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hortus Cognitor Granular Competitive Analysis - Multi-Dimensional Venn Diagrams</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .reference-code {
+            background-color: #ADA228;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        
+        .competitor-section {
+            background-color: white;
+            margin: 30px 0;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            page-break-inside: avoid;
+        }
+        
+        .dimension-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .venn-container {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        
+        .mini-venn {
+            position: relative;
+            width: 250px;
+            height: 150px;
+            margin: 10px auto;
+        }
+        
+        .mini-circle {
+            position: absolute;
+            border: 2px solid;
+            border-radius: 50%;
+            opacity: 0.7;
+        }
+        
+        .hortus-mini {
+            width: 100px;
+            height: 100px;
+            border-color: #ADA228;
+            background-color: rgba(173, 162, 40, 0.3);
+            left: 50px;
+            top: 25px;
+        }
+        
+        .competitor-mini {
+            width: 100px;
+            height: 100px;
+            border-color: #666;
+            background-color: rgba(102, 102, 102, 0.3);
+            left: 100px;
+            top: 25px;
+        }
+        
+        .overlap-high { background-color: rgba(76, 175, 80, 0.3); }
+        .overlap-medium { background-color: rgba(255, 193, 7, 0.3); }
+        .overlap-low { background-color: rgba(244, 67, 54, 0.3); }
+        .overlap-none { background-color: rgba(158, 158, 158, 0.3); }
+        
+        .overlap-indicator {
+            position: absolute;
+            left: 110px;
+            top: 60px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 11px;
+            color: white;
+            border: 1px solid white;
+        }
+        
+        .dimension-title {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .dimension-summary {
+            text-align: center;
+            font-size: 12px;
+            margin-top: 10px;
+            color: #666;
+        }
+        
+        .synthesis-venn {
+            position: relative;
+            width: 400px;
+            height: 300px;
+            margin: 20px auto;
+        }
+        
+        .synthesis-circle {
+            position: absolute;
+            border: 3px solid;
+            border-radius: 50%;
+            opacity: 0.7;
+        }
+        
+        .hortus-synthesis {
+            width: 180px;
+            height: 180px;
+            border-color: #ADA228;
+            background-color: rgba(173, 162, 40, 0.2);
+            left: 60px;
+            top: 60px;
+        }
+        
+        .competitor-synthesis {
+            width: 180px;
+            height: 180px;
+            border-color: #666;
+            background-color: rgba(102, 102, 102, 0.2);
+            left: 160px;
+            top: 60px;
+        }
+        
+        .synthesis-label {
+            position: absolute;
+            font-weight: bold;
+            font-size: 14px;
+            text-align: center;
+            width: 100px;
+        }
+        
+        .hortus-synthesis-label {
+            left: 90px;
+            top: 40px;
+            color: #ADA228;
+        }
+        
+        .competitor-synthesis-label {
+            left: 210px;
+            top: 40px;
+            color: #666;
+        }
+        
+        .synthesis-overlap {
+            position: absolute;
+            left: 190px;
+            top: 140px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 10px;
+            color: white;
+        }
+        
+        .master-synthesis {
+            background-color: #e8f5e8;
+            border-left: 4px solid #4CAF50;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+        
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .legend-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+        
+        @media print {
+            body { margin: 20px; }
+            .competitor-section { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="reference-code">HC-MA-02</div>
+        <h1>Hortus Cognitor Granular Competitive Analysis</h1>
+        <h2>Multi-Dimensional Venn Diagram Matrix</h2>
+        <p><strong>Document Purpose:</strong> Detailed dimensional analysis of competitive overlap across 10 key business dimensions</p>
+        <p><strong>Date:</strong> October 2025 | <strong>King of Elvador</strong></p>
+    </div>
+
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-circle overlap-high"></div>
+            <span>High Overlap (70-100%)</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-circle overlap-medium"></div>
+            <span>Medium Overlap (40-69%)</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-circle overlap-low"></div>
+            <span>Low Overlap (10-39%)</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-circle overlap-none"></div>
+            <span>No Overlap (0-9%)</span>
+        </div>
+    </div>
+
+    <!-- CSA NETWORK UK ANALYSIS -->
+    <div class="competitor-section">
+        <h2>CSA Network UK - Dimensional Analysis</h2>
+        <div class="reference-code">HC-MA-02A</div>
+        
+        <div class="dimension-grid">
+            <div class="venn-container">
+                <div class="dimension-title">Activities</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-low">15%</div>
+                </div>
+                <div class="dimension-summary">HC: Hands-on farming | CSA: Online planning sessions</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Learning Topics</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-medium">60%</div>
+                </div>
+                <div class="dimension-summary">Both: CSA, sustainable agriculture | Diff: transformation vs business</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Demographics</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-low">20%</div>
+                </div>
+                <div class="dimension-summary">HC: Transformation seekers | CSA: Aspiring entrepreneurs</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Price Points</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-medium">60%</div>
+                </div>
+                <div class="dimension-summary">HC: £5-6.67/hour | CSA: £11-22/hour - competitive value positioning</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Depth of Study</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-low">25%</div>
+                </div>
+                <div class="dimension-summary">HC: Personal transformation | CSA: Business planning depth</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Length of Study</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-medium">50%</div>
+                </div>
+                <div class="dimension-summary">Both: Extended duration | HC: 5 monthly | CSA: 15 weekly sessions</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Geographic Delivery</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-none">0%</div>
+                </div>
+                <div class="dimension-summary">HC: Local Leicester | CSA: Online UK-wide</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Transformation Philosophy</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-low">10%</div>
+                </div>
+                <div class="dimension-summary">HC: Internal + external change | CSA: Business transformation</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Instructor Background</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-medium">40%</div>
+                </div>
+                <div class="dimension-summary">Both: Agricultural expertise | HC: +Psychology | CSA: +Business</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Learning Methodology</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-low">20%</div>
+                </div>
+                <div class="dimension-summary">HC: Experiential outdoor | CSA: Online theoretical</div>
+            </div>
+        </div>
+
+        <div class="synthesis-venn">
+            <div class="synthesis-circle hortus-synthesis"></div>
+            <div class="synthesis-circle competitor-synthesis"></div>
+            <div class="synthesis-label hortus-synthesis-label">Hortus Cognitor</div>
+            <div class="synthesis-label competitor-synthesis-label">CSA Network UK</div>
+            <div class="synthesis-overlap overlap-low">30%</div>
+        </div>
+
+        <div class="competitive-assessment">
+            <h3>CSA Network UK - Overall Assessment: LOW OVERLAP (24%)</h3>
+            <p><strong>Key Overlaps:</strong> CSA focus, extended duration, some agricultural content</p>
+            <p><strong>Key Differences:</strong> Target audience (entrepreneurs vs transformation seekers), delivery method (online vs hands-on), price positioning, transformation philosophy</p>
+            <p><strong>Competitive Impact:</strong> Minimal - serves different market segment entirely</p>
+        </div>
+    </div>
+
+    <!-- PERMABLITZ LONDON ANALYSIS -->
+    <div class="competitor-section">
+        <h2>Permablitz London PDC - Dimensional Analysis</h2>
+        <div class="reference-code">HC-MA-02B</div>
+        
+        <div class="dimension-grid">
+            <div class="venn-container">
+                <div class="dimension-title">Activities</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-medium">45%</div>
+                </div>
+                <div class="dimension-summary">Both: Hands-on elements | HC: Farming | PL: Design projects</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Learning Topics</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-high">70%</div>
+                </div>
+                <div class="dimension-summary">Both: Sustainable agriculture, ecological design, community</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Demographics</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-medium">40%</div>
+                </div>
+                <div class="dimension-summary">Both: Sustainability-minded | HC: Rural | PL: Urban focus</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Price Points</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-high">85%</div>
+                </div>
+                <div class="dimension-summary">HC: £5-6.67/hour | PL: £6-7/hour - very similar value per hour</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Depth of Study</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-medium">50%</div>
+                </div>
+                <div class="dimension-summary">Both: Comprehensive | HC: Transformation | PL: Technical certification</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Length of Study</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-medium">60%</div>
+                </div>
+                <div class="dimension-summary">Both: Extended format | HC: 5 monthly | PL: Weekend series</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Geographic Delivery</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-none">5%</div>
+                </div>
+                <div class="dimension-summary">HC: Leicester rural | PL: London urban</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Transformation Philosophy</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-medium">35%</div>
+                </div>
+                <div class="dimension-summary">Both: Change-focused | HC: Personal | PL: Ecological design</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Instructor Background</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-medium">50%</div>
+                </div>
+                <div class="dimension-summary">Both: Agricultural expertise | HC: +Psychology | PL: +Design</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Learning Methodology</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-high">75%</div>
+                </div>
+                <div class="dimension-summary">Both: Experiential, hands-on, community-based learning</div>
+            </div>
+        </div>
+
+        <div class="synthesis-venn">
+            <div class="synthesis-circle hortus-synthesis"></div>
+            <div class="synthesis-circle competitor-synthesis"></div>
+            <div class="synthesis-label hortus-synthesis-label">Hortus Cognitor</div>
+            <div class="synthesis-label competitor-synthesis-label">Permablitz London</div>
+            <div class="synthesis-overlap overlap-medium">51%</div>
+        </div>
+
+        <div class="competitive-assessment">
+            <h3>Permablitz London - Overall Assessment: MEDIUM OVERLAP (43%)</h3>
+            <p><strong>Key Overlaps:</strong> Learning methodology, some topics, hands-on elements, extended format</p>
+            <p><strong>Key Differences:</strong> Geographic focus (rural vs urban), price accessibility, transformation vs certification focus</p>
+            <p><strong>Competitive Impact:</strong> Moderate - different geographic markets but some overlap in sustainability-minded demographics</p>
+        </div>
+    </div>
+
+    <!-- CHANGE IN NATURE ANALYSIS -->
+    <div class="competitor-section">
+        <h2>Change in Nature - Dimensional Analysis</h2>
+        <div class="reference-code">HC-MA-02C</div>
+        
+        <div class="dimension-grid">
+            <div class="venn-container">
+                <div class="dimension-title">Activities</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-medium">40%</div>
+                </div>
+                <div class="dimension-summary">Both: Nature-based | HC: Agricultural work | CiN: Facilitation practice</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Learning Topics</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-medium">35%</div>
+                </div>
+                <div class="dimension-summary">Both: Nature connection | HC: Agriculture | CiN: Facilitation skills</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Demographics</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-high">85%</div>
+                </div>
+                <div class="dimension-summary">Both: Personal transformation seekers, change-makers</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Price Points</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-low">25%</div>
+                </div>
+                <div class="dimension-summary">HC: £5-6.67/hour | CiN: Est. £130+/day - different value positioning</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Depth of Study</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-high">70%</div>
+                </div>
+                <div class="dimension-summary">Both: Deep transformation focus, holistic development</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Length of Study</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-low">30%</div>
+                </div>
+                <div class="dimension-summary">HC: 5 months sustained | CiN: 6-day intensive + follow-up</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Geographic Delivery</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-low">20%</div>
+                </div>
+                <div class="dimension-summary">HC: Local Leicester | CiN: Various UK locations</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Transformation Philosophy</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-high">90%</div>
+                </div>
+                <div class="dimension-summary">Both: Personal transformation through nature connection</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Instructor Background</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-medium">45%</div>
+                </div>
+                <div class="dimension-summary">Both: Transformation expertise | HC: +Agriculture | CiN: +Facilitation</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Learning Methodology</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-high">80%</div>
+                </div>
+                <div class="dimension-summary">Both: Experiential nature-based learning, community focus</div>
+            </div>
+        </div>
+
+        <div class="synthesis-venn">
+            <div class="synthesis-circle hortus-synthesis"></div>
+            <div class="synthesis-circle competitor-synthesis"></div>
+            <div class="synthesis-label hortus-synthesis-label">Hortus Cognitor</div>
+            <div class="synthesis-label competitor-synthesis-label">Change in Nature</div>
+            <div class="synthesis-overlap overlap-medium">47%</div>
+        </div>
+
+        <div class="competitive-assessment">
+            <h3>Change in Nature - Overall Assessment: MEDIUM OVERLAP (49%)</h3>
+            <p><strong>Key Overlaps:</strong> Demographics, transformation philosophy, learning methodology, depth of study</p>
+            <p><strong>Key Differences:</strong> Professional development vs personal growth, price accessibility, duration format, agricultural vs facilitation focus</p>
+            <p><strong>Competitive Impact:</strong> Moderate - similar target audience but different price points and outcomes (facilitator training vs personal transformation)</p>
+        </div>
+    </div>
+
+    <!-- THE APRICOT CENTRE ANALYSIS -->
+    <div class="competitor-section">
+        <h2>The Apricot Centre - Dimensional Analysis</h2>
+        <div class="reference-code">HC-MA-02D</div>
+        
+        <div class="dimension-grid">
+            <div class="venn-container">
+                <div class="dimension-title">Activities</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-high">85%</div>
+                </div>
+                <div class="dimension-summary">Both: Hands-on agricultural work, practical farming</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Learning Topics</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-high">90%</div>
+                </div>
+                <div class="dimension-summary">Both: Regenerative agriculture, land-based systems, sustainability</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Demographics</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-low">25%</div>
+                </div>
+                <div class="dimension-summary">HC: Transformation seekers | AC: Career-focused professionals/students</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Price Points</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-medium">40%</div>
+                </div>
+                <div class="dimension-summary">HC: £5-6.67/hour | AC: £10-15/hour - competitive value range</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Depth of Study</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-high">75%</div>
+                </div>
+                <div class="dimension-summary">Both: Comprehensive agricultural education</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Length of Study</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-low">30%</div>
+                </div>
+                <div class="dimension-summary">HC: 5 monthly sessions | AC: Intensive residential programs</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Geographic Delivery</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-none">5%</div>
+                </div>
+                <div class="dimension-summary">HC: Local Leicester | AC: Devon residential</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Transformation Philosophy</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-medium">60%</div>
+                </div>
+                <div class="dimension-summary">Both: Land-health-human connection | HC: Personal | AC: Professional</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Instructor Background</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-high">80%</div>
+                </div>
+                <div class="dimension-summary">Both: Regenerative agriculture expertise and credentials</div>
+            </div>
+
+            <div class="venn-container">
+                <div class="dimension-title">Learning Methodology</div>
+                <div class="mini-venn">
+                    <div class="mini-circle hortus-mini"></div>
+                    <div class="mini-circle competitor-mini"></div>
+                    <div class="overlap-indicator overlap-high">85%</div>
+                </div>
+                <div class="dimension-summary">Both: Hands-on experiential agricultural learning</div>
+            </div>
+        </div>
+
+        <div class="synthesis-venn">
+            <div class="synthesis-circle hortus-synthesis"></div>
+            <div class="synthesis-circle competitor-synthesis"></div>
+            <div class="synthesis-label hortus-synthesis-label">Hortus Cognitor</div>
+            <div class="synthesis-label competitor-synthesis-label">Apricot Centre</div>
+            <div class="synthesis-overlap overlap-medium">58%</div>
+        </div>
+
+        <div class="competitive-assessment">
+            <h3>The Apricot Centre - Overall Assessment: MEDIUM OVERLAP (54%)</h3>
+            <p><strong>Key Overlaps:</strong> Agricultural activities, learning topics, instructor background, methodology, depth of study</p>
+            <p><strong>Key Differences:</strong> Target demographics (personal vs professional), price accessibility, geographic delivery, transformation focus</p>
+            <p><strong>Competitive Impact:</strong> Moderate to High - highest content overlap but serves different market segments and price points</p>
+        </div>
+    </div>
+
+    <!-- MASTER SYNTHESIS -->
+    <div class="master-synthesis">
+        <h2>Master Competitive Synthesis</h2>
+        <div class="reference-code">HC-MA-02E</div>
+        
+        <h3>Overall Competitive Overlap Rankings:</h3>
+        <ol>
+            <li><strong>The Apricot Centre: 58%</strong> - Highest content overlap, different market segment</li>
+            <li><strong>Permablitz London: 51%</strong> - High overlap including pricing, different geography</li>
+            <li><strong>Change in Nature: 47%</strong> - Medium transformation overlap, different methodology</li>
+            <li><strong>CSA Network UK: 30%</strong> - Lowest overlap, different target audience</li>
+        </ol>
+
+        <h3>Key Findings:</h3>
+        <ul>
+            <li><strong>No Direct Competitors:</strong> Even highest overlap (58%) indicates distinct market positions</li>
+            <li><strong>Competitive Pricing:</strong> £5-6.67/hour positions HC competitively vs £6-22/hour range across competitors</li>
+            <li><strong>Demographic Differentiation:</strong> Only Change in Nature shares similar target demographics (85%)</li>
+            <li><strong>Geographic Advantage:</strong> Local Leicester delivery provides unique accessibility</li>
+            <li><strong>Methodology Strengths:</strong> Experiential learning approach shared with some but agricultural focus unique</li>
+        </ul>
+
+        <h3>Strategic Implications:</h3>
+        <p><strong>Blue Ocean Market Position:</strong> Hortus Cognitor operates in an underserved market space combining personal transformation, agricultural practice, local accessibility, and affordable pricing - a combination not offered by any competitor.</p>
+    </div>
+
+    <footer style="text-align: center; margin-top: 40px; padding: 20px; background-color: white; border-radius: 8px;">
+        <p><strong>Document Reference:</strong> HC-MA-02 | <strong>Created:</strong> October 2025 | <strong>Business Plan Supporting Documentation</strong></p>
+        <p><strong>Companion to:</strong> HC-MA-01 (Overview Competitive Analysis)</p>
+    </footer>
+</body>
+</html>
