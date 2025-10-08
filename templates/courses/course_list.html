@@ -16,33 +16,37 @@
     </div>
 </section>
 
-<section class="container">
-    <div class="course-grid">
+<section class="container" style="padding: 3rem 20px;">
+    <div class="course-table-container">
         {% for course in courses %}
-        <div class="course-card">
-            <div class="course-card-header">
-                <h3>{{ course.title }}</h3>
+        <div class="course-table-row">
+            <div class="course-main-info">
+                <h3 class="course-title">{{ course.title }}</h3>
                 {% if course.subtitle %}
-                <p style="font-size: 1rem; opacity: 0.9;">{{ course.subtitle }}</p>
+                <p class="course-subtitle">{{ course.subtitle }}</p>
                 {% endif %}
+                <p class="course-description">{{ course.description|truncatewords:25 }}</p>
             </div>
-            <div class="course-card-body">
-                <div class="course-meta">
-                    <span>📅 {{ course.start_date|date:"F Y" }}</span>
-                    <span>⏱ {{ course.duration }}</span>
+            <div class="course-details">
+                <div class="course-detail-item">
+                    <strong>Start:</strong> {{ course.start_date|date:"F Y" }}
                 </div>
-                <div class="course-meta" style="margin-bottom: 1.5rem;">
-                    <span>👥 Max {{ course.max_participants }} participants</span>
-                    <span>💷 £{{ course.price }}</span>
+                <div class="course-detail-item">
+                    <strong>Duration:</strong> {{ course.duration }}
                 </div>
-                <div class="course-description">
-                    <p>{{ course.description|truncatewords:40 }}</p>
+                <div class="course-detail-item">
+                    <strong>Participants:</strong> Max {{ course.max_participants }}
                 </div>
-                <a href="{% url 'course_detail' course.slug %}" class="btn">Learn More</a>
+                <div class="course-detail-item">
+                    <strong>Price:</strong> £{{ course.price }}
+                </div>
+            </div>
+            <div class="course-action">
+                <a href="{% url 'course_detail' course.slug %}" class="btn btn-small">Learn More</a>
             </div>
         </div>
         {% empty %}
-        <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+        <div class="no-courses">
             <h3 style="color: #ADA228;">No courses available at the moment</h3>
             <p>Please check back soon for upcoming courses.</p>
         </div>
