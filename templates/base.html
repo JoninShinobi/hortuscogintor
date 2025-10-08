@@ -17,7 +17,12 @@
                         <img src="{% static 'images/CARROTFIST_white.png' %}" alt="Hortus Cognitor" class="logo">
                     </a>
                 </div>
-                <ul class="nav-menu">
+                <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-menu" id="nav-menu">
                     <li><a href="{% url 'home' %}">Home</a></li>
                     <li><a href="{% url 'course_list' %}">Courses</a></li>
                     <li><a href="#about">About</a></li>
@@ -37,5 +42,19 @@
             <p>&copy; 2025 Hortus Cognitor. Creating real change through the land.</p>
         </div>
     </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('nav-menu');
+            navMenu.classList.toggle('active');
+        }
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('nav-menu').classList.remove('active');
+            });
+        });
+    </script>
 </body>
 </html>
