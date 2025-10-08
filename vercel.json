@@ -2,12 +2,11 @@
   "version": 2,
   "builds": [
     {
-      "src": "hortus_cognitor/wsgi.py",
-      "use": "@vercel/python",
-      "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
+      "src": "static/**",
+      "use": "@vercel/static"
     },
     {
-      "src": "static/**",
+      "src": "staticfiles/**",
       "use": "@vercel/static"
     }
   ],
@@ -17,15 +16,13 @@
       "dest": "/static/$1"
     },
     {
-      "src": "/media/(.*)",
-      "dest": "/media/$1"
+      "src": "/staticfiles/(.*)",
+      "dest": "/staticfiles/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "hortus_cognitor/wsgi.py"
+      "dest": "https://hortuscognitor.onrender.com/$1",
+      "status": 308
     }
-  ],
-  "env": {
-    "DJANGO_SETTINGS_MODULE": "hortus_cognitor.settings"
-  }
+  ]
 }
