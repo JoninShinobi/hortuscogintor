@@ -353,7 +353,7 @@ footer {
     color: var(--white);
     padding: 2rem 0;
     text-align: center;
-    margin-top: 3rem;
+    margin-top: 0;
 }
 
 /* Responsive Design */
