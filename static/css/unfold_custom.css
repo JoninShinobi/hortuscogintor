@@ -103,6 +103,22 @@ html:not(.dark) .leading-relaxed.mt-2.text-xs {
     color: rgb(107 114 128) !important; /* Medium gray for help text */
 }
 
+/* LOGIN FORM SPECIFIC FIXES */
+.login-form label,
+#login-form label,
+.font-semibold.text-font-important-light,
+.font-semibold.text-font-important-dark,
+.block.font-semibold {
+    color: rgb(229 231 235) !important; /* Always light text for dark login background */
+}
+
+/* Login form inputs */
+.login-form input,
+#login-form input {
+    color: rgb(17 24 39) !important; /* Dark text in input fields */
+    background-color: rgb(255 255 255) !important; /* White background for inputs */
+}
+
 /* NUCLEAR OPTION - Force all text to be visible regardless of theme */
 label,
 td, th,
