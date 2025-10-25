@@ -139,6 +139,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: -13rem;
 }
 
+
 .hero h1 {
     font-family: 'hey-eloise', 'Kalam', 'Patrick Hand', 'Caveat', cursive;
     color: var(--primary-color);
@@ -485,5 +486,39 @@ footer {
     
     .course-action {
         margin-top: 1rem;
+    }
+    
+    /* Course page title positioning fix for mobile */
+    .hero-content h1 {
+        margin-top: 50px;
+    }
+    
+    /* Course detail page hero content positioning fix for mobile */
+    .hero.course-hero .hero-content {
+        padding-top: 50px;
+    }
+    
+    /* Course detail page content padding for mobile */
+    .course-detail {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .course-content {
+        padding: 0 0.5rem;
+    }
+    
+    /* Make course detail text more white on mobile */
+    .course-content p {
+        color: #ffffff !important;
+    }
+    
+    /* Fix yellow text visibility on white background in sidebar */
+    .course-sidebar h3 {
+        color: #333333 !important;
+    }
+    
+    .course-sidebar p[style*="color: #ADA228"] {
+        color: #333333 !important;
     }
 }

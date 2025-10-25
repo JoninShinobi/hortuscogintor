@@ -4,7 +4,7 @@
 {% block title %}{{ course.title }} - Hortus Cognitor{% endblock %}
 
 {% block content %}
-<section class="hero" {% if course.hero_image %}style="background: linear-gradient(rgba(26, 26, 26, 0.7), rgba(42, 42, 42, 0.7)), url('{{ course.hero_image.url }}'); background-size: cover; background-position: center; background-attachment: fixed;"{% endif %}>
+<section class="hero course-hero" {% if course.hero_image %}style="background: linear-gradient(rgba(26, 26, 26, 0.7), rgba(42, 42, 42, 0.7)), url('{{ course.hero_image.url }}'); background-size: cover; background-position: center; background-attachment: fixed;"{% endif %}>
     <div class="hero-logo">
         <img src="{% static 'images/CARROTFIST_white.png' %}" alt="Hortus Cognitor Logo">
     </div>
@@ -50,7 +50,7 @@
         
         <div class="course-sidebar">
             <div style="background: white; padding: 2rem; border-radius: 8px; margin-bottom: 2rem;">
-                <h3 style="font-family: 'hey-eloise', 'Kalam', 'Patrick Hand', 'Caveat', cursive; color: #ADA228; font-size: 1.8rem; margin-bottom: 1rem;">Course Investment</h3>
+                <h3 style="font-family: 'hey-eloise', 'Kalam', 'Patrick Hand', 'Caveat', cursive; color: #ADA228; font-size: 1.8rem; margin-bottom: 1rem;">How much does it cost?</h3>
                 <p style="font-size: 2rem; color: #ADA228; font-weight: 500; font-family: 'Georgia', serif; margin-bottom: 1rem;">£{{ course.price }}</p>
                 <p style="font-size: 0.9rem; color: #666; margin-bottom: 2rem;">Limited to {{ course.max_participants }} participants</p>
             </div>
