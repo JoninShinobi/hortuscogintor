@@ -59,12 +59,20 @@ h1, h2, h3, h4, h5, h6 {
 
 .navbar .container {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
 }
 
+.nav-brand {
+    margin-right: auto;
+}
+
+.nav-menu {
+    margin-left: auto;
+}
+
 .nav-brand .logo {
-    height: 60px;
+    height: 100px;
     width: auto;
 }
 
@@ -378,6 +386,37 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--primary-color);
     font-size: 1.8rem;
     margin-bottom: 1rem;
+}
+
+/* Highlighting effect for text */
+.highlight-text {
+    position: relative;
+    display: inline-block;
+    z-index: 2;
+}
+
+.highlight-text::before,
+.highlight-text::after {
+    content: '';
+    position: absolute;
+    background: rgba(255, 255, 255, 0.9);
+    height: 55px;
+    z-index: -1;
+    border-radius: 4px;
+}
+
+.highlight-text::before {
+    top: -5px;
+    left: -10px;
+    width: 105%;
+    transform: rotate(-0.5deg);
+}
+
+.highlight-text::after {
+    top: 8px;
+    left: -5px;
+    width: 110%;
+    transform: rotate(0.3deg);
 }
 
 /* Footer */

@@ -48,11 +48,18 @@
             <p style="line-height: 1.8;">{{ course.what_you_will_gain }}</p>
         </div>
         
+        <!-- Standalone highlighted heading on black background -->
+        <div style="grid-column: 1 / -1; text-align: center; margin: 2rem 0;">
+            <h3 style="font-family: 'hey-eloise', 'Kalam', 'Patrick Hand', 'Caveat', cursive; color: #000000; font-size: 2.2rem; margin-bottom: 0; position: relative;">
+                <span class="highlight-text">How much does it cost?</span>
+            </h3>
+        </div>
+        
         <div class="course-sidebar">
+            <!-- White background section with pricing -->
             <div style="background: white; padding: 2rem; border-radius: 8px; margin-bottom: 2rem;">
-                <h3 style="font-family: 'hey-eloise', 'Kalam', 'Patrick Hand', 'Caveat', cursive; color: #ADA228; font-size: 1.8rem; margin-bottom: 1rem;">How much does it cost?</h3>
-                <p style="font-size: 2rem; color: #ADA228; font-weight: 500; font-family: 'Georgia', serif; margin-bottom: 1rem;">£{{ course.price }}</p>
-                <p style="font-size: 0.9rem; color: #666; margin-bottom: 2rem;">Limited to {{ course.max_participants }} participants</p>
+                <p style="font-size: 2rem; color: #ADA228; font-weight: 500; font-family: 'Georgia', serif; margin-bottom: 1rem; text-align: center;">£{{ course.price }}</p>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 0; text-align: center;">Limited to {{ course.max_participants }} participants</p>
             </div>
             
             <div class="booking-form">
