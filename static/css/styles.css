@@ -560,4 +560,25 @@ footer {
     .course-sidebar p[style*="color: #ADA228"] {
         color: #333333 !important;
     }
+    
+    /* Make home page mission boxes wrap on mobile - more specific selectors */
+    .section-black div[style*="display: grid"] {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+        justify-items: center !important;
+        max-width: 400px !important;
+        margin: 0 auto !important;
+    }
+    
+    /* Allow mission box titles to wrap on mobile */
+    .section-black h3 {
+        white-space: normal !important;
+        font-size: 1.5rem !important;
+    }
+    
+    /* Centre featured course text on mobile */
+    .section-white p {
+        text-align: center !important;
+    }
 }
